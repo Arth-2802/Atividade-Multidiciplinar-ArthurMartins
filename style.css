@@ -19,102 +19,102 @@ body {
     max-width: 450px;
 }
 
-.cadastro-box {
+.form-wrapper {
     background: white;
-    border-radius: 20px;
     padding: 40px;
+    border-radius: 15px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
-.logo {
+h1 {
+    color: #333;
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.subtitle {
+    color: #666;
     text-align: center;
     margin-bottom: 30px;
-}
-
-.logo h1 {
-    color: #EA1D2C;
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-.logo p {
-    color: #666;
     font-size: 14px;
-}
-
-.form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    margin-bottom: 20px;
 }
 
-.form-group label {
+label {
+    display: block;
     color: #333;
     font-weight: 600;
+    margin-bottom: 8px;
     font-size: 14px;
 }
 
-.form-group input {
-    padding: 14px;
+input {
+    width: 100%;
+    padding: 12px 15px;
     border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 15px;
-    transition: all 0.3s;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
     outline: none;
 }
 
-.form-group input:focus {
-    border-color: #EA1D2C;
-    box-shadow: 0 0 0 3px rgba(234, 29, 44, 0.1);
+input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.form-group input::placeholder {
-    color: #aaa;
+input.error {
+    border-color: #e74c3c;
 }
 
-.btn-cadastrar {
-    background: #EA1D2C;
+input.success {
+    border-color: #2ecc71;
+}
+
+.error-message {
+    display: block;
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+    min-height: 18px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 16px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     margin-top: 10px;
 }
 
-.btn-cadastrar:hover {
-    background: #d11a26;
+.btn-submit:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(234, 29, 44, 0.3);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
 }
 
-.btn-cadastrar:active {
+.btn-submit:active {
     transform: translateY(0);
 }
 
 .login-link {
     text-align: center;
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid #e0e0e0;
-}
-
-.login-link p {
+    margin-top: 20px;
     color: #666;
     font-size: 14px;
 }
 
 .login-link a {
-    color: #EA1D2C;
+    color: #667eea;
     text-decoration: none;
     font-weight: 600;
 }
@@ -125,12 +125,18 @@ body {
 
 /* Mensagem de sucesso */
 .success-message {
-    background: #4CAF50;
-    color: white;
+    background: #d4edda;
+    color: #155724;
     padding: 15px;
-    border-radius: 10px;
-    text-align: center;
+    border-radius: 8px;
     margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #c3e6cb;
+    display: none;
+}
+
+.success-message.show {
+    display: block;
     animation: slideDown 0.3s ease;
 }
 
@@ -147,11 +153,11 @@ body {
 
 /* Responsividade */
 @media (max-width: 480px) {
-    .cadastro-box {
+    .form-wrapper {
         padding: 30px 20px;
     }
     
-    .logo h1 {
-        font-size: 28px;
+    h1 {
+        font-size: 26px;
     }
 }

@@ -1,101 +1,142 @@
-// Seleciona o formulário
+// Seleciona o formulário e os campos
 const form = document.getElementById('cadastroForm');
+const nomeInput = document.getElementById('nome');
+const emailInput = document.getElementById('email');
+const senhaInput = document.getElementById('senha');
+const confirmarSenhaInput = document.getElementById('confirmarSenha');
 
-// Adiciona evento de submit
+// Seleciona as mensagens de erro
+const nomeError = document.getElementById('nomeError');
+const emailError = document.getElementById('emailError');
+const senhaError = document.getElementById('senhaError');
+const confirmarSenhaError = document.getElementById('confirmarSenhaError');
+
+// Função para validar nome
+function validarNome() {
+    const nome = nomeInput.value.trim();
+    
+    if (nome === '') {
+        mostrarErro(nomeInput, nomeError, 'O nome é obrigatório');
+        return false;
+    } else if (nome.length < 3) {
+        mostrarErro(nomeInput, nomeError, 'O nome deve ter pelo menos 3 caracteres');
+        return false;
+    } else {
+        mostrarSucesso(nomeInput, nomeError);
+        return true;
+    }
+}
+
+// Função para validar email
+function validarEmail() {
+    const email = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (email === '') {
+        mostrarErro(emailInput, emailError, 'O e-mail é obrigatório');
+        return false;
+    } else if (!emailRegex.test(email)) {
+        mostrarErro(emailInput, emailError, 'Digite um e-mail válido');
+        return false;
+    } else {
+        mostrarSucesso(emailInput, emailError);
+        return true;
+    }
+}
+
+// Função para validar senha
+function validarSenha() {
+    const senha = senhaInput.value;
+    
+    if (senha === '') {
+        mostrarErro(senhaInput, senhaError, 'A senha é obrigatória');
+        return false;
+    } else if (senha.length < 6) {
+        mostrarErro(senhaInput, senhaError, 'A senha deve ter pelo menos 6 caracteres');
+        return false;
+    } else {
+        mostrarSucesso(senhaInput, senhaError);
+        return true;
+    }
+}
+
+// Função para validar confirmação de senha
+function validarConfirmarSenha() {
+    const senha = senhaInput.value;
+    const confirmarSenha = confirmarSenhaInput.value;
+    
+    if (confirmarSenha === '') {
+        mostrarErro(confirmarSenhaInput, confirmarSenhaError, 'Confirme sua senha');
+        return false;
+    } else if (senha !== confirmarSenha) {
+        mostrarErro(confirmarSenhaInput, confirmarSenhaError, 'As senhas não coincidem');
+        return false;
+    } else {
+        mostrarSucesso(confirmarSenhaInput, confirmarSenhaError);
+        return true;
+    }
+}
+
+// Função para mostrar erro
+function mostrarErro(input, errorElement, mensagem) {
+    input.classList.add('error');
+    input.classList.remove('success');
+    errorElement.textContent = mensagem;
+}
+
+// Função para mostrar sucesso
+function mostrarSucesso(input, errorElement) {
+    input.classList.remove('error');
+    input.classList.add('success');
+    errorElement.textContent = '';
+}
+
+// Adiciona validação em tempo real
+nomeInput.addEventListener('blur', validarNome);
+emailInput.addEventListener('blur', validarEmail);
+senhaInput.addEventListener('blur', validarSenha);
+confirmarSenhaInput.addEventListener('blur', validarConfirmarSenha);
+
+// Valida ao digitar na confirmação de senha
+confirmarSenhaInput.addEventListener('input', function() {
+    if (confirmarSenhaInput.value !== '') {
+        validarConfirmarSenha();
+    }
+});
+
+// Evento de submit do formulário
 form.addEventListener('submit', function(e) {
     e.preventDefault();
     
-    // Pega os valores dos campos
-    const nome = document.getElementById('nome').value;
-    const email = document.getElementById('email').value;
-    const senha = document.getElementById('senha').value;
+    // Valida todos os campos
+    const nomeValido = validarNome();
+    const emailValido = validarEmail();
+    const senhaValida = validarSenha();
+    const confirmarSenhaValida = validarConfirmarSenha();
     
-    // Cria objeto com os dados
-    const usuario = {
-        nome: nome,
-        email: email,
-        senha: senha,
-        dataCadastro: new Date().toLocaleString('pt-BR')
-    };
-    
-    // Salva no localStorage (simulando um banco de dados)
-    let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-    
-    // Verifica se o email já existe
-    const emailExiste = usuarios.some(user => user.email === email);
-    
-    if (emailExiste) {
-        mostrarMensagem('Este e-mail já está cadastrado!', 'erro');
-        return;
-    }
-    
-    // Adiciona novo usuário
-    usuarios.push(usuario);
-    localStorage.setItem('usuarios', JSON.stringify(usuarios));
-    
-    // Mostra mensagem de sucesso
-    mostrarMensagem('Cadastro realizado com sucesso! 🎉', 'sucesso');
-    
-    // Limpa o formulário
-    form.reset();
-    
-    // Log no console (para verificação)
-    console.log('Usuário cadastrado:', usuario);
-    console.log('Total de usuários:', usuarios.length);
-});
-
-// Função para mostrar mensagens
-function mostrarMensagem(texto, tipo) {
-    // Remove mensagem anterior se existir
-    const mensagemAntiga = document.querySelector('.message');
-    if (mensagemAntiga) {
-        mensagemAntiga.remove();
-    }
-    
-    // Cria nova mensagem
-    const mensagem = document.createElement('div');
-    mensagem.className = `message ${tipo === 'sucesso' ? 'success-message' : 'error-message'}`;
-    mensagem.textContent = texto;
-    
-    // Adiciona CSS para mensagem de erro
-    if (tipo === 'erro') {
-        mensagem.style.background = '#f44336';
-        mensagem.style.color = 'white';
-        mensagem.style.padding = '15px';
-        mensagem.style.borderRadius = '10px';
-        mensagem.style.textAlign = 'center';
-        mensagem.style.marginBottom = '20px';
-        mensagem.style.animation = 'slideDown 0.3s ease';
-    }
-    
-    // Insere antes do formulário
-    const cadastroBox = document.querySelector('.cadastro-box');
-    const logo = document.querySelector('.logo');
-    cadastroBox.insertBefore(mensagem, logo.nextSibling);
-    
-    // Remove após 5 segundos
-    setTimeout(() => {
-        mensagem.style.opacity = '0';
-        mensagem.style.transition = 'opacity 0.3s';
-        setTimeout(() => mensagem.remove(), 300);
-    }, 5000);
-}
-
-// Validação em tempo real
-document.getElementById('email').addEventListener('input', function(e) {
-    const email = e.target.value;
-    if (email && !email.includes('@')) {
-        e.target.style.borderColor = '#f44336';
-    } else {
-        e.target.style.borderColor = '#e0e0e0';
-    }
-});
-
-document.getElementById('senha').addEventListener('input', function(e) {
-    const senha = e.target.value;
-    if (senha.length > 0 && senha.length < 6) {
-        e.target.style.borderColor = '#f44336';
-    } else {
-        e.target.style.borderColor = '#e0e0e0';
+    // Se todos os campos forem válidos
+    if (nomeValido && emailValido && senhaValida && confirmarSenhaValida) {
+        // Coleta os dados do formulário
+        const dadosCadastro = {
+            nome: nomeInput.value.trim(),
+            email: emailInput.value.trim(),
+            senha: senhaInput.value
+        };
+        
+        // Exibe os dados no console (você pode enviar para um servidor aqui)
+        console.log('Cadastro realizado com sucesso!');
+        console.log(dadosCadastro);
+        
+        // Mostra mensagem de sucesso
+        alert('Cadastro realizado com sucesso!\n\nNome: ' + dadosCadastro.nome + '\nE-mail: ' + dadosCadastro.email);
+        
+        // Limpa o formulário
+        form.reset();
+        
+        // Remove as classes de sucesso
+        document.querySelectorAll('input').forEach(input => {
+            input.classList.remove('success');
+            input.classList.remove('error');
+        });
     }
 });

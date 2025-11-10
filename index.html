@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - FoodExpress</title>
+    <title>Página de Cadastro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="cadastro-box">
-            <div class="logo">
-                <h1>🍔 FoodExpress</h1>
-                <p>Cadastre-se e peça sua comida favorita!</p>
-            </div>
+        <div class="form-wrapper">
+            <h1>Cadastro</h1>
+            <p class="subtitle">Preencha os campos abaixo para criar sua conta</p>
             
-            <form id="cadastroForm" class="form">
+            <form id="cadastroForm">
                 <div class="form-group">
                     <label for="nome">Nome Completo</label>
                     <input 
@@ -24,6 +22,7 @@
                         placeholder="Digite seu nome completo"
                         required
                     >
+                    <span class="error-message" id="nomeError"></span>
                 </div>
 
                 <div class="form-group">
@@ -32,9 +31,10 @@
                         type="email" 
                         id="email" 
                         name="email" 
-                        placeholder="seu@email.com"
+                        placeholder="Digite seu e-mail"
                         required
                     >
+                    <span class="error-message" id="emailError"></span>
                 </div>
 
                 <div class="form-group">
@@ -43,17 +43,29 @@
                         type="password" 
                         id="senha" 
                         name="senha" 
-                        placeholder="Mínimo 6 caracteres"
-                        minlength="6"
+                        placeholder="Digite sua senha"
                         required
                     >
+                    <span class="error-message" id="senhaError"></span>
                 </div>
 
-                <button type="submit" class="btn-cadastrar">Cadastrar</button>
+                <div class="form-group">
+                    <label for="confirmarSenha">Confirmar Senha</label>
+                    <input 
+                        type="password" 
+                        id="confirmarSenha" 
+                        name="confirmarSenha" 
+                        placeholder="Confirme sua senha"
+                        required
+                    >
+                    <span class="error-message" id="confirmarSenhaError"></span>
+                </div>
+
+                <button type="submit" class="btn-submit">Cadastrar</button>
             </form>
 
             <div class="login-link">
-                <p>Já tem uma conta? <a href="#">Fazer login</a></p>
+                <p>Já possui uma conta? <a href="#">Fazer login</a></p>
             </div>
         </div>
     </div>
