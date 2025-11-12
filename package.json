@@ -1,0 +1,31 @@
+{
+  "name": "atividade",
+  "version": "1.0.0",
+  "description": "Projeto de cadastro com Node.js, Express e MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongodb": "^7.0.0",
+    "mongoose": "^8.19.3"
+  },
+  "engines": {
+    "node": ">=18.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arth-2802/Atividade-Multidiciplinar-ArthurMartins.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Arth-2802/Atividade-Multidiciplinar-ArthurMartins/issues"
+  },
+  "homepage": "https://github.com/Arth-2802/Atividade-Multidiciplinar-ArthurMartins#readme"
+}
