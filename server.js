@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const connectDB = require('./config/database');
 
 const app = express();
@@ -11,8 +12,8 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware para servir arquivos estáticos (HTML, CSS, JS)
-app.use(express.static('.'));
+// Servir arquivos estáticos (CSS, JS, imagens)
+app.use(express.static(path.join(__dirname)));
 
 // Rotas da API
 app.get('/api', (req, res) => {
@@ -27,7 +28,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Rota para cadastro (exemplo)
+// Rota para cadastro
 app.post('/api/cadastro', async (req, res) => {
   try {
     const { nome, email, senha } = req.body;
@@ -49,9 +50,9 @@ app.post('/api/cadastro', async (req, res) => {
   }
 });
 
-// Rota principal - serve o index.html
+// Rota principal - serve o index.html (deve vir por último)
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Para desenvolvimento local
