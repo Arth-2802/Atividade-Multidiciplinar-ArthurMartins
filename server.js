@@ -12,8 +12,8 @@ connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir arquivos estáticos (CSS, JS, imagens)
-app.use(express.static(path.join(__dirname)));
+// Servir arquivos estáticos (CSS, JS, imagens) da pasta "public" em dev e produção
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Rotas da API
 app.get('/api', (req, res) => {
@@ -52,7 +52,7 @@ app.post('/api/cadastro', async (req, res) => {
 
 // Rota principal - serve o index.html (deve vir por último)
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Para desenvolvimento local
